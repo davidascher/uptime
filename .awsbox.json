@@ -1,4 +1,4 @@
 {
-  "processes": [ "server.js" ]
+  "processes": [ "app.js" ]
 }
 
