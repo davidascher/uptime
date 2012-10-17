@@ -92,12 +92,12 @@ io.sockets.on('connection', function(socket) {
   });
 });
 
-// load plugins
-fs.exists('./plugins/index.js', function(exists) {
-  if (exists) {
-    require('./plugins').init(app, io, config, mongoose);
-  };
-});
+// // load plugins
+// fs.exists('./plugins/index.js', function(exists) {
+//   if (exists) {
+//     require('./plugins').init(app, io, config, mongoose);
+//   };
+// });
 
-server.listen(config.server.port);
+server.listen(process.env['PORT'] || config.server.port);
 console.log("Express server listening on port %d in %s mode", config.server.port, app.settings.env);
