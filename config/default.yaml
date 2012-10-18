@@ -1,6 +1,6 @@
 mongodb:
   server:   localhost
-  database: uptime
+  database: uptime3
   user:     root 
   password:
   connectionString:       # alternative to setting server, database, user and password separately
@@ -16,6 +16,7 @@ analyzer:
   updateInterval:         60000      # one minute
   qosAggregationInterval: 600000     # ten minutes
   pingHistory:            8035200000 # three months
+
 
 autoStartMonitor: true
 
