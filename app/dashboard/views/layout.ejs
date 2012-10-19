@@ -114,7 +114,8 @@
             data: {assertion: assertion},
             success: function(res, status, xhr) { 
             $('#signin').hide();$("#signedin").show();
-            $("#username").text(res.email)
+            console.log("logged in as ", res.email);
+            $("#username").text(res.email);
           },
             error: function(xhr, status, err) { alert("login failure" + res); }
           });
