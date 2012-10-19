@@ -16,7 +16,9 @@ var TimeCalculator = require('../../lib/timeCalculator');
 var app = module.exports = express();
 
 function authorized(email) {
+  if (! email) return false;
   var parts = email.split('@');
+  if (parts.length != 2) return false;
   domain = parts[parts.length-1];
   if (domain == 'mozilla.com' ||
       domain == 'mozillafoundation.org') return true;
