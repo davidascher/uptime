@@ -41,7 +41,7 @@ app.configure(function(){
   app.use(express.methodOverride());
   app.use(express.cookieParser());
   app.use(express.session({ secret: 'this is so not secret ' }));
-  persona(app, {audience: "http://localhost:8082"});
+  persona(app, {audience: config.server.audience});
   app.use(app.router);
 
 

@@ -113,9 +113,11 @@
             url: '/persona/verify', // This is a URL on your website.
             data: {assertion: assertion},
             success: function(res, status, xhr) { 
-            $('#signin').hide();$("#signedin").show();
-            console.log("logged in as ", res.email);
-            $("#username").text(res.email);
+              if (res.email) { // otherwise it's an audience failure
+                $('#signin').hide();$("#signedin").show();
+                console.log("logged in as ", res.email);
+                $("#username").text(res.email);
+              }
           },
             error: function(xhr, status, err) { alert("login failure" + res); }
           });
