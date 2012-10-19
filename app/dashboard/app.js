@@ -15,6 +15,14 @@ var TimeCalculator = require('../../lib/timeCalculator');
 
 var app = module.exports = express();
 
+function authorized(email) {
+  var parts = email.split('@');
+  domain = parts[parts.length-1];
+  if (domain == 'mozilla.com' ||
+      domain == 'mozillafoundation.org') return true;
+  return false;
+}
+
 // middleware
 
 app.configure(function(){
@@ -69,6 +77,9 @@ app.get('/checks/new', function(req, res) {
 });
 
 app.post('/checks', function(req, res) {
+  if (! authorized(req.session.email)) {
+    return res.send(403, 'not authorized');
+  }
   var check = new Check(req.body.check);
   check.name = check.name || check.url;
   check.tags = Check.convertTags(req.body.check.tags);
@@ -90,6 +101,9 @@ app.get('/checks/:id', function(req, res, next) {
 });
 
 app.put('/checks/:id', function(req, res, next) {
+  if (! authorized(req.session.email)) {
+    return res.send(403, 'not authorized');
+  }
   var check = req.body.check;
   check.tags = Check.convertTags(check.tags);
   check.interval = req.body.check.interval * 1000;
@@ -102,6 +116,9 @@ app.put('/checks/:id', function(req, res, next) {
 });
 
 app.delete('/checks/:id', function(req, res, next) {
+  if (! authorized(req.session.email)) {
+    return res.send(403, 'not authorized');
+  }
   Check.findOne({ _id: req.params.id }, function(err, check) {
     if (err) return next(err);
     if (!check) return next(new Error('failed to load check ' + req.params.id));

@@ -19,7 +19,7 @@ var mongoose   = require('./bootstrap');
 // monitor
 
 if (config.autoStartMonitor) {
-  m = monitor.createMonitor(config.monitor);
+  m = monitor.createMonitor(config.monitor, config.server);
   m.start();
 }
 
@@ -31,14 +31,20 @@ a.start();
 var app = module.exports = express();
 var server = http.createServer(app);
 
+var persona = require("express-persona");
+
 app.configure(function(){
-  app.use(app.router);
+
   // the following middlewares are only necessary for the mounted 'dashboard' app, 
   // but express needs it on the parent app (?) and it therefore pollutes the api
   app.use(express.bodyParser());
   app.use(express.methodOverride());
   app.use(express.cookieParser());
-  app.use(express.session({ secret: 'qdfegsgkjhflkquhfskqdjfhskjdfh' }));
+  app.use(express.session({ secret: 'this is so not secret ' }));
+  persona(app, {audience: "http://localhost:8082"});
+  app.use(app.router);
+
+
 });
 
 app.configure('development', function() {
@@ -98,6 +104,7 @@ fs.exists('./plugins/index.js', function(exists) {
     require('./plugins').init(app, io, config, mongoose);
    };
  });
+
 
 server.listen(process.env['PORT'] || config.server.port);
 console.log("Express server listening on port %d in %s mode", config.server.port, app.settings.env);

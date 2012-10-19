@@ -156,3 +156,16 @@ table.chart td {
 table.chart td:first-child {
   width: 40%;
 }
+
+#username {
+  color: white;
+}
+
+a#signin {
+  padding-top: 6px;
+  padding-bottom: 0;
+}
+
+#signedin {
+  margin-top: 12px;
+}
